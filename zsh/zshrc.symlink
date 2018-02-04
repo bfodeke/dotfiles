@@ -1,6 +1,10 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
+# Setup Bash compatibliity mode for loading bash completions.
+autoload bashcompinit
+bashcompinit
+
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
@@ -50,10 +54,13 @@ plugins=(brew colorize common-aliases compleat git meteor tmux)
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
 # Add path for Drush
 export PATH=$HOME/.composer/vendor/bin:$PATH
+
+# Drush autocomplete.
+source ~/.dotfiles/drush/drush.complete.sh
 
 # Add env var for local meteor packages
 export PACKAGE_DIRS="$HOME/Projects/Community/Meteor/meteor-packages"
@@ -77,6 +84,17 @@ alias phpcbf="phpcbf --standard=Drupal --extensions=php,module,inc,install,test,
 if [ -f /usr/local/share/liquidprompt ]; then
   . /usr/local/share/liquidprompt
 fi
+if [ -f /usr/share/liquidprompt/liquidprompt ]; then
+  . /usr/share/liquidprompt/liquidprompt
+fi
+
+# Docker4Drupal Drush aliases for Drupal 7 and Drupal 8.
+alias drushd4d7="docker-compose exec --user 82 php drush --root=/var/www/html"
+alias drushd4d8="docker-compose exec --user 82 php drush --root=/var/www/html/web"
+
+# Show/Hide hidden files
+alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
+alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
 
 # Allowing opening of Sublime Text 3 in tmux sessions
 alias subl="reattach-to-user-namespace subl"
@@ -84,5 +102,6 @@ alias subl="reattach-to-user-namespace subl"
 # Load nvm.
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
