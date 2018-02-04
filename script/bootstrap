@@ -232,7 +232,7 @@ fi
 
 # Install coder
 composer global require drupal/coder
-cp -r ~/.composer/vendor/drupal/coder/coder_sniffer/Drupal ~/.composer/vendor/drupal/coder/coder_sniffer/DrupalPractice ~/.composer/vendor/squizlabs/php_codesniffer/CodeSniffer/Standards
+\cp -r ~/.composer/vendor/drupal/coder/coder_sniffer/Drupal ~/.composer/vendor/drupal/coder/coder_sniffer/DrupalPractice ~/.composer/vendor/squizlabs/php_codesniffer/CodeSniffer/Standards || :
 
 drush cc drush
 
