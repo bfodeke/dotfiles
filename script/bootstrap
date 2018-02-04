@@ -114,9 +114,20 @@ if [ $(uname) == "Darwin" ]; then
   if [[ $? != 0  ]] ; then
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   fi
+
   /usr/local/bin/brew update
   /usr/local/bin/brew upgrade
-  /usr/local/bin/brew install ansible ctags git git-flow hub jo jsonpp liquidprompt mariadb nmap reattach-to-user-namespace ssh-copy-id the_silver_searcher tig tmux tree vim watch wget
+
+  # For sierra, Xcode alone is not sufficient on Sierra.
+  if [ $? != 0 ] ]; then
+    xcode-select --install
+    /usr/local/bin/brew upgrade
+  fi
+
+  /usr/local/bin/brew install ansible ctags git git-flow hub jo jsonpp liquidprompt mariadb nmap reattach-to-user-namespace ssh-copy-id the_silver_searcher tig tmux tree vim watch wget cowsay fortune
+
+  # Install sack
+  curl -o- https://raw.githubusercontent.com/sampson-chen/sack/master/install_sack.sh | bash
 
   # Install nvm and global node
   curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.4/install.sh | bash
@@ -131,6 +142,9 @@ if [ $(uname) == "Darwin" ]; then
   # Install rvm and global ruby
   curl -sSL https://get.rvm.io | bash -s stable
   export PATH="$PATH:$HOME/.rvm/bin"
+
+  # Install lolcat for pretty colors
+  gem install lolcat
 
   # Install Vagrant plugins
   which -s vagrant
