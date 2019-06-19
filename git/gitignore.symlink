@@ -24,3 +24,7 @@ sites/default/files
 .sass-cache/
 .codekit-config.json
 config.codekit
+
+# vscode #
+##########
+.vscode
