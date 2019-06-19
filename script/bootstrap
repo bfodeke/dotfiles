@@ -119,17 +119,20 @@ if [ $(uname) == "Darwin" ]; then
   /usr/local/bin/brew upgrade
 
   # For sierra, Xcode alone is not sufficient on Sierra.
-  if [ $? != 0 ] ]; then
+  if [ $? != 0 ]; then
     xcode-select --install
     /usr/local/bin/brew upgrade
   fi
 
-  /usr/local/bin/brew install ansible ctags git git-flow hub jo jsonpp liquidprompt mariadb nmap reattach-to-user-namespace ssh-copy-id the_silver_searcher tig tmux tree vim watch wget cowsay fortune
+  # Install all the brew goodies.
+  /usr/local/bin/brew install rbenv ansible ctags git git-flow hub jo jsonpp liquidprompt mariadb nmap reattach-to-user-namespace ssh-copy-id the_silver_searcher tig tmux tree vim watch wget cowsay fortune
 
-  # Install sack
-  curl -o- https://raw.githubusercontent.com/sampson-chen/sack/master/install_sack.sh | bash
+  # Install sack.
+  cd $HOME
+  git clone https://github.com/sampson-chen/sack.git && cd sack && chmod +x install_sack.sh && ./install_sack.sh
+  echo "Installed Sack"
 
-  # Install nvm and global node
+  # Install nvm and global node.
   curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.4/install.sh | bash
   export NVM_DIR="$HOME/.nvm"
   [ -s "$NVM_DIR/nvm.sh"  ] && . "$NVM_DIR/nvm.sh"
@@ -142,9 +145,13 @@ if [ $(uname) == "Darwin" ]; then
   # Install rvm and global ruby
   curl -sSL https://get.rvm.io | bash -s stable
   export PATH="$PATH:$HOME/.rvm/bin"
+  export RBENV_ROOT=/usr/local/var/rbenv
+  rbenv install 2.3.0
+  rbenv global 2.3.0
 
   # Install lolcat for pretty colors
   gem install lolcat
+  echo "Installed lolcat"
 
   # Install Vagrant plugins
   which -s vagrant
