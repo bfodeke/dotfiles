@@ -6,7 +6,7 @@
   filemode = false
   editor = vim
 [github]
-  user = shrop
+  user = bfodeke
 [url "git@github.com:"]
   insteadOf = "github:"
 [apply]
