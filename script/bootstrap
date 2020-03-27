@@ -118,29 +118,28 @@ if [ $(uname) == "Darwin" ]; then
   # Install all the brew goodies.
   /usr/local/bin/brew update
   /usr/local/bin/brew upgrade
-  /usr/local/bin/brew install
-  /usr/local/bin/brew rbenv
-  /usr/local/bin/brew ansible
-  /usr/local/bin/brew ctags
-  /usr/local/bin/brew git
-  /usr/local/bin/brew git-flow
-  /usr/local/bin/brew hub
-  /usr/local/bin/brew jo
-  /usr/local/bin/brew jsonpp
-  /usr/local/bin/brew liquidprompt
-  /usr/local/bin/brew mariadb
-  /usr/local/bin/brew nmap
-  /usr/local/bin/brew reattach-to-user-namespace
-  /usr/local/bin/brew ssh-copy-id
-  /usr/local/bin/brew the_silver_searcher
-  /usr/local/bin/brew tig
-  /usr/local/bin/brew tmux
-  /usr/local/bin/brew tree
-  /usr/local/bin/brew vim
-  /usr/local/bin/brew watch
-  /usr/local/bin/brew wget
-  /usr/local/bin/brew cowsay
-  /usr/local/bin/brew fortune
+  /usr/local/bin/brew install rbenv
+  /usr/local/bin/brew install ansible
+  /usr/local/bin/brew install ctags
+  /usr/local/bin/brew install git
+  /usr/local/bin/brew install git-flow
+  /usr/local/bin/brew install hub
+  /usr/local/bin/brew install jo
+  /usr/local/bin/brew install jsonpp
+  /usr/local/bin/brew install liquidprompt
+  /usr/local/bin/brew install mariadb
+  /usr/local/bin/brew install nmap
+  /usr/local/bin/brew install reattach-to-user-namespace
+  /usr/local/bin/brew install ssh-copy-id
+  /usr/local/bin/brew install the_silver_searcher
+  /usr/local/bin/brew install tig
+  /usr/local/bin/brew install tmux
+  /usr/local/bin/brew install tree
+  /usr/local/bin/brew install vim
+  /usr/local/bin/brew install watch
+  /usr/local/bin/brew install wget
+  /usr/local/bin/brew install cowsay
+  /usr/local/bin/brew install fortune
 
   # Install zsh syntax highlighting.
   if [ ! -d ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting ]; then
@@ -182,6 +181,15 @@ if [ $(uname) == "Darwin" ]; then
 
   # Install Monaco for Powerline font.
   cp ~/dotfiles/fonts/MonacoforPowerline.otf /Library/Fonts
+
+  # Install vagrant plugins
+  which -s vagrant
+  if [[ $? = 0  ]] ; then	
+    vagrant plugin install vagrant-cachier	
+    vagrant plugin install vagrant-hostsupdater	
+    vagrant plugin install vagrant-scp	
+    vagrant plugin install vagrant-shell-commander	
+  fi
 fi
 
 # Install Plug
@@ -215,7 +223,6 @@ drupal/coder
 
 # Run Composer global update.
 composer global update
-
 
 if [ ! -d "$HOME/.drush" ]; then
   mkdir -p $HOME/.drush
