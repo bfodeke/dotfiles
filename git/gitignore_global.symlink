@@ -70,16 +70,17 @@ tmux*log
 .DS_Store?
 .DS_Store
 ehthumbs.db
-Icon
+Icon
+
 Thumbs.db
 
 # Drupal #
 ##########
-sites/*/settings*.php
+sites/*/settings.*.php
 sites/*/services*.yml
 sites/*/files
 sites/*/private
-*/sites/*/settings*.php
+*/sites/*/settings.*.php
 */sites/*/files/
 */sites/*/private/
 drupalforfirebug
@@ -95,6 +96,11 @@ FirePHPCore
 .jira-url
 .idea
 *.chproj
+.vscode/
+
+# JS projects #
+###############
+node_modules
 
 #########################
 # .gitignore file for Xcode4 / OS X Source projects

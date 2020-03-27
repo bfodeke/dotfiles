@@ -28,3 +28,7 @@ config.codekit
 # vscode #
 ##########
 .vscode
+
+# JS #
+######
+node_modules
