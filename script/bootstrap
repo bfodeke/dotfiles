@@ -155,6 +155,7 @@ if [ $(uname) == "Darwin" ]; then
   /usr/local/bin/brew install wget
   /usr/local/bin/brew install cowsay
   /usr/local/bin/brew install fortune
+  /usr/local/bin/brew install lolcat
 
   # Download gruvbox for iTerm2.
   if [ ! -f ~/bin/gruvbox-dark.itermcolors ]; then
@@ -200,6 +201,11 @@ fi
 
 if `cat /proc/cpuinfo | grep -q "Raspberry Pi"`; then
   sudo apt-get -y install vim-nox
+fi
+
+# Installs oh-my-zsh.
+if [! -d "$HOME/.oh-my-zsh"]; then
+  sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
 
 # Install zsh syntax highlighting.

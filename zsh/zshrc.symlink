@@ -116,11 +116,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-eval "$(rbenv init -)"
-
-# MOTD-like message
-fortune -s | cowsay -f stegosaurus | lolcat
 export PATH="/usr/local/opt/php@7.2/bin:$PATH"
 export PATH="/usr/local/opt/php@7.2/sbin:$PATH"
 
@@ -137,7 +132,7 @@ if [ -f '/Users/bfodeke/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/b
 export PATH="$HOME/.yarn/bin:$PATH"
 
 # Go lang paths.
-export GOPATH=$HOME/golang
+export GOPATH=$HOME/go
 export GOROOT=/usr/local/opt/go/libexec
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
@@ -157,3 +152,6 @@ export PATH="$HOME/bin/flutter/bin:$PATH"
 
 # Google Cloud SDK path.
 export PATH="$HOME/bin/google-cloud-sdk/bin:$PATH"
+
+# MOTD-like message
+fortune -s | cowsay -f ghostbusters | lolcat

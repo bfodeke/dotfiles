@@ -1,6 +1,6 @@
 [user]
         name = Bayo Fodeke
-	email = bfodeke@gmail.com
+	email = bfodeke@redhat.com
 [core]
         excludesfile = ~/.gitignore_global
         filemode = false

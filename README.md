@@ -15,8 +15,8 @@ Dependencies to install via Homebrew, apt, or from source
 
 
 ### Installation
-* `git clone https://github.com/bfodeke/dotfiles.git ~/dotfiles`
-* `cd ~/dotfiles`
+* `git clone https://github.com/bfodeke/dotfiles.git ~/.dotfiles`
+* `cd ~/.dotfiles`
 * `script/bootstrap`
 
 The install script will symlink the appropriate files in .dotfiles to your home directory. Everything is configured and tweaked within ~/.dotfiles, though. All files and folders ending in .symlink get, you guessed it, symlinked. For example: ~/.dotfiles/vim/vimrc.symlink gets symlinked to ~/.vimrc.
