@@ -6,6 +6,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'jiangmiao/auto-pairs'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'rizzatti/dash.vim'
+Plug 'mattn/emmet-vim'
 Plug 'scrooloose/nerdtree'
 Plug 'shawncplus/phpcomplete.vim'
 Plug 'ervandew/supertab'
@@ -14,13 +15,17 @@ Plug 'majutsushi/tagbar'
 Plug 'edkolev/tmuxline.vim'
 Plug 'joonty/vdebug'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'ntpeters/vim-better-whitespace'
+Plug 'tomasiser/vim-code-dark'
+Plug 'tpope/vim-commentary'
 Plug 'airblade/vim-gitgutter'
-Plug 'sickill/vim-monokai'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 Plug 'arnaud-lb/vim-php-namespace'
+Plug 'tpope/vim-surround'
 Plug 'szw/vim-tags'
-Plug 'git://drupalcode.org/project/vimrc.git', {'rtp': 'bundle/vim-plugin-for-drupal/'}
+Plug 'morhetz/gruvbox'
+Plug 'https://git.drupalcode.org/project/vimrc.git', {'branch': '8.x-1.x', 'rtp': 'bundle/vim-plugin-for-drupal/'}
 call plug#end()
 
 """""""""""""""""""""""""""""""""""""""
@@ -42,9 +47,10 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-let g:syntastic_phpcs_conf="--standard=Drupal,DrupalPractice --extensions='php,module,inc,install,test,profile,theme,js,css,info,txt' --ignore='*.features.*.inc'"
+let g:syntastic_php_phpcs_args="--standard=Drupal,DrupalPractice --extensions='php,module,inc,install,test,profile,theme,js,css,info,txt' --ignore='*.features.*.inc'"
+let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
@@ -62,6 +68,7 @@ let g:airline_powerline_fonts=1
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
 set noshowmode
+let g:airline_theme='gruvbox'
 
 " vim-php-namespace settings.
 function! IPhpInsertUse()
@@ -73,15 +80,13 @@ autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>
 
 " Vdebug settings.
 let g:vdebug_options = {}
-
 let g:vdebug_options['break_on_open'] = 0
-let g:vdebug_options['path_maps'] = {'/var/www/drupal7/web' : '/Users/shrop/Sites/drupal7/web', '/var/www/drupal8/web' : '/Users/shrop/Sites/drupal8/web'}
 let g:vdebug_options['max_children'] = 128
 let g:vdebug_options['watch_window_style'] = 'compact'
 " Need to set as empty for this to work with Vagrant boxes.
 let g:vdebug_options['server'] = ""
 
-" Vim-Tags settings.
+" Allow per directory .vimrc configurations.
 set exrc
 set secure
 
@@ -89,14 +94,20 @@ set secure
 " Text editing and vim tweaks
 """""""""""""""""""""""""""""""""""""""
 
+let g:gruvbox_italic=1
+set background=dark
+colorscheme gruvbox
 set noswapfile
-colorscheme monokai
 syntax enable
 set number
 set title
 set visualbell
 set backspace=eol,start,indent
 set nowrap
+
+" Allow project spricifc .vimrc files
+set exrc
+set secure
 
 " Tab settings.
 set expandtab
@@ -160,3 +171,12 @@ map <C-n> :NERDTreeToggle<CR>
 
 " Tagbar mappings.
 nmap <F8> :TagbarToggle<CR>
+
+" NERDTree mappings.
+map <F9> :SyntasticCheck<CR>
+
+" Window movement and new window mappings.
+map <silent> <C-h> :call functions#WinMove('h')<cr>
+map <silent> <C-j> :call functions#WinMove('j')<cr>
+map <silent> <C-k> :call functions#WinMove('k')<cr>
+map <silent> <C-l> :call functions#WinMove('l')<cr>

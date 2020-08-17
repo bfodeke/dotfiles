@@ -9,7 +9,7 @@ bashcompinit
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="robbyrussell"
+ZSH_THEME="pygmalion"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -49,20 +49,44 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(brew colorize common-aliases compleat git meteor tmux)
+plugins=(aws colorize common-aliases compleat git git-extras history jira ssh-agent tmux tmuxinator zsh-syntax-highlighting)
+
+# Setup ssh-agent.
+if [ "$(uname)" = "Linux" ]; then
+  zstyle :omz:plugins:ssh-agent identities id_rsa
+  zstyle :omz:plugins:ssh-agent lifetime 4h
+fi
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
+# Color settings.
+source "$HOME/.dotfiles/vim/vim.symlink/plugged/gruvbox/gruvbox_256palette.sh"
+
+# User configuration.
 export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
-# Add path for Drush
+# Set tmuxinator env.
+export EDITOR=vim
+alias mux="tmuxinator"
+
+# Alias for ag (The Silver Searcher).
+alias ag='\ag --pager="less -XFR"'
+alias sag='\sag --pager="less -XFR"'
+
+# Alias for Raspberry Pi measuretemp
+alias temp="/opt/vc/bin/vcgencmd measure_temp"
+
+# Add path for dotfiles bin folder.
+export PATH=$HOME/.dotfiles/bin:$PATH
+
+# Add path for Drush.
 export PATH=$HOME/.composer/vendor/bin:$PATH
+export PATH=$HOME/.config/composer/vendor/bin:$PATH
 
 # Drush autocomplete.
-source ~/dotfiles/drush/drush.complete.sh
+source ~/.dotfiles/drush/drush.complete.sh
 
-# Add env var for local meteor packages
+# Add env var for local meteor packages.
 export PACKAGE_DIRS="$HOME/Projects/Community/Meteor/meteor-packages"
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -77,24 +101,12 @@ alias tmux="tmux -2"
 alias kts="tmux kill-server"
 
 # My standard drush coder setup as an alias.
-alias phpcs="phpcs --standard=Drupal,DrupalPractice --extensions='php,module,inc,install,test,profile,theme,js,css,info,txt' --ignore='*.features.*.inc'"
-alias phpcbf="phpcbf --standard=Drupal --extensions=php,module,inc,install,test,profile,theme"
-
-# Setup liquidprompt if available.
-if [ -f /usr/local/share/liquidprompt ]; then
-  . /usr/local/share/liquidprompt
-fi
-if [ -f /usr/share/liquidprompt/liquidprompt ]; then
-  . /usr/share/liquidprompt/liquidprompt
-fi
+alias phpcs="phpcs --standard=Drupal,DrupalPractice --extensions=php,module,inc,install,test,profile,theme"
+alias phpcbf="phpcbf --standard=Drupal,DrupalPractice --extensions=php,module,inc,install,test,profile,theme"
 
 # Docker4Drupal Drush aliases for Drupal 7 and Drupal 8.
 alias drushd4d7="docker-compose exec --user 82 php drush --root=/var/www/html"
 alias drushd4d8="docker-compose exec --user 82 php drush --root=/var/www/html/web"
-
-# Show/Hide hidden files
-alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
-alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
 
 # Allowing opening of Sublime Text 3 in tmux sessions
 alias subl="reattach-to-user-namespace subl"
@@ -120,3 +132,28 @@ if [ -f '/Users/bfodeke/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/bfodeke
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/bfodeke/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/bfodeke/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Yarn paths.
+export PATH="$HOME/.yarn/bin:$PATH"
+
+# Go lang paths.
+export GOPATH=$HOME/golang
+export GOROOT=/usr/local/opt/go/libexec
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOROOT/bin
+
+# Brew PHP binary added to paths.
+export PATH="/usr/local/opt/php@7.3/bin:$PATH"
+export PATH="/usr/local/opt/php@7.3/sbin:$PATH"
+
+# Brew paths.
+export PATH="/usr/local/sbin:$PATH"
+
+# Ruby paths.
+export PATH="/usr/local/opt/ruby/bin:$PATH"
+
+# Flutter path.
+export PATH="$HOME/bin/flutter/bin:$PATH"
+
+# Google Cloud SDK path.
+export PATH="$HOME/bin/google-cloud-sdk/bin:$PATH"

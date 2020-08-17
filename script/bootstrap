@@ -108,189 +108,179 @@ install_dotfiles () {
 setup_gitconfig
 install_dotfiles
 
-# Install homebrew and OS X specific apps
+# Install homebrew and OS X specific apps.
 if [ $(uname) == "Darwin" ]; then
-  which -s brew
-  if [[ $? != 0  ]] ; then
+  if ! which brew > /dev/null; then
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   fi
-
-  # Install all the brew goodies.
   /usr/local/bin/brew update
   /usr/local/bin/brew upgrade
-  /usr/local/bin/brew install rbenv
+  /usr/local/bin/brew tap drud/ddev
+  /usr/local/bin/brew tap netlify/netlifyctl
+  /usr/local/bin/brew tap dart-lang/dart
   /usr/local/bin/brew install ansible
+  /usr/local/bin/brew install awscli
+  /usr/local/bin/brew install clamav
+  /usr/local/bin/brew install cocoapods
   /usr/local/bin/brew install ctags
+  /usr/local/bin/brew install dart
+  /usr/local/bin/brew install ddev
+  /usr/local/bin/brew install deno
+  /usr/local/bin/brew install dos2unix
+  /usr/local/bin/brew install fzf
   /usr/local/bin/brew install git
-  /usr/local/bin/brew install git-flow
-  /usr/local/bin/brew install hub
+  /usr/local/bin/brew install go
+  /usr/local/bin/brew install httpie
+  /usr/local/bin/brew install inetutils
   /usr/local/bin/brew install jo
   /usr/local/bin/brew install jsonpp
-  /usr/local/bin/brew install liquidprompt
   /usr/local/bin/brew install mariadb
+  /usr/local/bin/brew install mosh
+  /usr/local/bin/brew install netlifyctl
   /usr/local/bin/brew install nmap
+  /usr/local/bin/brew install php@7.3
+  /usr/local/bin/brew install pv
   /usr/local/bin/brew install reattach-to-user-namespace
+  /usr/local/bin/brew install redis
   /usr/local/bin/brew install ssh-copy-id
   /usr/local/bin/brew install the_silver_searcher
+  /usr/local/bin/brew install textql
   /usr/local/bin/brew install tig
   /usr/local/bin/brew install tmux
+  /usr/local/bin/brew install tmuxinator
   /usr/local/bin/brew install tree
   /usr/local/bin/brew install vim
   /usr/local/bin/brew install watch
+  /usr/local/bin/brew install watchman
   /usr/local/bin/brew install wget
   /usr/local/bin/brew install cowsay
   /usr/local/bin/brew install fortune
-
-  # Install zsh syntax highlighting.
-  if [ ! -d ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting ]; then
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-  fi
 
   # Download gruvbox for iTerm2.
   if [ ! -f ~/bin/gruvbox-dark.itermcolors ]; then
     cd ~/bin && wget https://raw.githubusercontent.com/morhetz/gruvbox-contrib/master/iterm2/gruvbox-dark.itermcolors
   fi
 
-  # Install Sack.
-  if [ ! -d ~/dotfiles/bin/sack ]; then
-    git clone https://github.com/sampson-chen/sack.git ~/dotfiles/bin/sack && cd ~/dotfiles/bin/sack && chmod +x install_sack.sh && ./install_sack.sh
-  fi
-
-  # Install nvm and global node.
-  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.4/install.sh | bash
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh"  ] && . "$NVM_DIR/nvm.sh"
-  nvm install node
-
-  # Install npm packags.
-  if [ $(uname) == "Darwin" ]; then
-    npm install -g gatsby-cli
-    npm install -g firebase-tools
-  fi
-
-  # Install rvm and global ruby
-  curl -sSL https://get.rvm.io | bash -s stable
-  export PATH="$PATH:$HOME/.rvm/bin"
-  export RBENV_ROOT=/usr/local/var/rbenv
-  rbenv install 2.3.0
-  rbenv global 2.3.0
-
-  # Install lolcat for pretty colors
-  gem install lolcat
-  echo "Installed lolcat"
-
   # Install Monaco for Powerline font.
-  cp ~/dotfiles/fonts/MonacoforPowerline.otf /Library/Fonts
+  cp ~/.dotfiles/fonts/MonacoforPowerline.otf /Library/Fonts/
 
-  # Install vagrant plugins
-  which -s vagrant
-  if [[ $? = 0  ]] ; then	
-    vagrant plugin install vagrant-cachier	
-    vagrant plugin install vagrant-hostsupdater	
-    vagrant plugin install vagrant-scp	
-    vagrant plugin install vagrant-shell-commander	
+  # Install wuzz.
+  go get github.com/asciimoo/wuzz
+
+  # Update Flutter.
+  if which flutter > /dev/null; then
+    flutter upgrade
   fi
 fi
 
-# Install Plug
+# Install Debian Linux specific apps.
+if [ -f /etc/debian_version ]; then
+  sudo apt-get update
+  sudo apt-get -y install ansible
+  sudo apt-get -y install ctags
+  sudo apt-get -y install dos2unix
+  sudo apt-get -y install httpie
+  sudo apt-get -y install jo
+  sudo apt-get -y install mariadb-client
+  sudo apt-get -y install mosh
+  sudo apt-get -y install php
+  sudo apt-get -y install php-curl
+  sudo apt-get -y install php-zip
+  sudo apt-get -y install php-xml
+  sudo apt-get -y install php-mbstring
+  sudo apt-get -y install pv
+  sudo apt-get -y install redis-tools
+  sudo apt-get -y install ruby
+  sudo apt-get -y install silversearcher-ag
+  sudo apt-get -y install tig
+  sudo apt-get -y install tmux
+  sudo apt-get -y install tree
+  sudo apt-get -y install tmuxinator
+fi
+
+if `cat /proc/cpuinfo | grep -q "Raspberry Pi"`; then
+  sudo apt-get -y install vim-nox
+fi
+
+# Install zsh syntax highlighting.
+if [ ! -d ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting ]; then
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+fi
+
+# Install Sack.
+if [ ! -d ~/.dotfiles/bin/sack ]; then
+  git clone https://github.com/sampson-chen/sack.git ~/.dotfiles/bin/sack && cd ~/.dotfiles/bin/sack && chmod +x install_sack.sh && ./install_sack.sh
+fi
+
+# Install nvm and global node.
+if [ ! -d "$HOME/.nvm" ]; then
+  mkdir -p $HOME/.nvm
+fi
+curl -o- https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+nvm install node
+nvm alias default 14
+
+# Install npm packags.
+npm install -g gatsby-cli
+npm install -g firebase-tools
+npm install -g lighthouse
+npm install -g yarn
+
+# Disable gatsby telemetry.
+gatsby telemetry --disable
+
+# Install Plug.
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-# Install plugins
-vim +PlugInstall +qall now
+# Install plugins.
+vim +PlugInstall +qall
 
-# Install Composer
+# Update Plug and plugins.
+vim +PlugUpgrade +PlugUpdate +qall
+
+# Install Composer.
 curl -Ss https://getcomposer.org/installer | php
+
 if [ $(uname) == "Darwin" ]; then
   mv composer.phar /usr/local/bin/composer
   else sudo mv composer.phar /usr/local/bin/composer
 fi
 
-# Install Drupal Console
-curl https://drupalconsole.com/installer -L -o drupal.phar
-mv drupal.phar /usr/local/bin/drupal
-chmod +x /usr/local/bin/drupal
-drupal init --override
-drupal check
-
-# Install Drush and related drush tools
-composer global require drush/drush:^8.1.0 \
+# Install Composer project dependencies.
+composer global require hirak/prestissimo \
 drush/config-extra \
-hirak/prestissimo \
 pantheon-systems/terminus \
 squizlabs/php_codesniffer \
 dealerdirect/phpcodesniffer-composer-installer \
-drupal/coder
+drupal/coder \
+mglaman/drupal-check
 
 # Run Composer global update.
 composer global update
 
-if [ ! -d "$HOME/.drush" ]; then
-  mkdir -p $HOME/.drush
+# Install Drush.
+if [ $(uname) == "Darwin" ]
+  then
+    curl -OL https://github.com/drush-ops/drush-launcher/releases/latest/download/drush.phar
+    chmod +x drush.phar
+    mv drush.phar /usr/local/bin/drush
+  else
+    wget -O drush.phar https://github.com/drush-ops/drush-launcher/releases/latest/download/drush.phar
+    chmod +x drush.phar
+    sudo mv drush.phar /usr/local/bin/drush
 fi
 
-drush cc drush
-
-if [ ! -d "$HOME/.drush/composer_generate" ]; then
-  git clone --branch 7.x-1.x https://git.drupal.org/project/composer_generate.git $HOME/.drush/composer_generate
-  cd $HOME/.drush/composer_generate
-  git checkout tags/7.x-1.3 -b 7.x-1.3
-  cd -
-fi
-
-if [ ! -d "$HOME/.drush/drupalgeddon" ]; then
-  git clone --branch 7.x-1.x https://git.drupal.org/project/drupalgeddon.git $HOME/.drush/drupalgeddon
-  cd -
-fi
-
-if [ ! -d "$HOME/.drush/registry_rebuild" ]; then
-  git clone --branch 7.x-2.x https://git.drupal.org/project/registry_rebuild.git $HOME/.drush/registry_rebuild
-  cd $HOME/.drush/registry_rebuild
-  git checkout tags/7.x-2.3 -b 7.x-2.3
-  cd -
-fi
-
-if [ ! -d "$HOME/.drush/security_review" ]; then
-  git clone --branch 7.x-1.x https://git.drupal.org/project/security_review.git $HOME/.drush/security_review
-  cd $HOME/.drush/security_review
-  git checkout tags/7.x-1.2 -b 7.x-1.2
-  cd -
-fi
-
-if [ ! -d "$HOME/.drush/securitytesting" ]; then
-  git clone --branch 7.x-1.x https://git.drupal.org/project/securitytesting.git $HOME/.drush/securitytesting
-  cd -
-fi
-
-if [ ! -d "$HOME/.drush/sensitive_data" ]; then
-  git clone --branch 7.x-1.x https://git.drupal.org/project/sensitive_data.git $HOME/.drush/sensitive_data
-  cd $HOME/.drush/sensitive_data
-  git checkout tags/7.x-1.0 -b 7.x-1.0
-  cd -
-fi
-
-if [ ! -d "$HOME/.drush/site_audit" ]; then
-  git clone --branch 7.x-1.x https://git.drupal.org/project/site_audit.git $HOME/.drush/site_audit
-  cd $HOME/.drush/site_audit
-  git checkout tags/7.x-1.16 -b 7.x-1.16
-  composer install
-  cd -
-fi
-
-if [ ! -d "$HOME/.drush/unused_modules" ]; then
-  git clone --branch 7.x-1.x https://git.drupal.org/project/unused_modules.git $HOME/.drush/unused_modules
-  cd $HOME/.drush/unused_modules
-  git checkout tags/7.x-1.5 -b 7.x-1.5
-  cd -
-fi
-
-drush cc drush
+# Install Google Cloud SDK
+curl https://sdk.cloud.google.com > install.sh
+bash install.sh --disable-prompts --install-dir=$HOME/bin
+rm install.sh
 
 # Install Wodby CLI
-if [ $(uname) == "Darwin" ]; then
-  export WODBY_CLI_LATEST_URL=$(curl -s https://api.github.com/repos/wodby/wodby-cli/releases/latest | grep darwin-amd64 | grep browser_download_url | cut -d '"' -f 4)
-  wget -qO- "${WODBY_CLI_LATEST_URL}" | tar xz -C /usr/local/bin
-fi
+export WODBY_CLI_LATEST_URL=$(curl -s https://api.github.com/repos/wodby/wodby-cli/releases/latest | grep darwin-amd64 | grep browser_download_url | cut -d '"' -f 4)
+wget -qO- "${WODBY_CLI_LATEST_URL}" | tar xz -C /usr/local/bin
 
 echo ''
 echo '  All installed!'
-
