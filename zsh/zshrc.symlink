@@ -154,4 +154,4 @@ export PATH="$HOME/bin/flutter/bin:$PATH"
 export PATH="$HOME/bin/google-cloud-sdk/bin:$PATH"
 
 # MOTD-like message
-fortune -s | cowsay -f ghostbusters | lolcat
+fortune -s | cowsay -f ghostbusters | lolcat -a -s 500
