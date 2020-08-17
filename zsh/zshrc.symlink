@@ -92,7 +92,7 @@ export PACKAGE_DIRS="$HOME/Projects/Community/Meteor/meteor-packages"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # Extra completions.
-fpath=(~/dotfiles/zsh/zsh-completions/src $fpath)
+fpath=(~/.dotfiles/zsh/zsh-completions/src $fpath)
 
 # This alias is to prevent some OS X related tmux issues (If I remember correctly).
 alias tmux="tmux -2"
