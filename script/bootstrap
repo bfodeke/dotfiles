@@ -122,18 +122,22 @@ if [ $(uname) == "Darwin" ]; then
   /usr/local/bin/brew install awscli
   /usr/local/bin/brew install clamav
   /usr/local/bin/brew install cocoapods
+  /usr/local/bin/brew install cowsay
   /usr/local/bin/brew install ctags
   /usr/local/bin/brew install dart
   /usr/local/bin/brew install ddev
   /usr/local/bin/brew install deno
   /usr/local/bin/brew install dos2unix
+  /usr/local/bin/brew install fortune
   /usr/local/bin/brew install fzf
   /usr/local/bin/brew install git
   /usr/local/bin/brew install go
   /usr/local/bin/brew install httpie
   /usr/local/bin/brew install inetutils
+  /usr/local/bin/brew install iterm2
   /usr/local/bin/brew install jo
   /usr/local/bin/brew install jsonpp
+  /usr/local/bin/brew install lolcat
   /usr/local/bin/brew install mariadb
   /usr/local/bin/brew install mosh
   /usr/local/bin/brew install netlifyctl
@@ -153,9 +157,6 @@ if [ $(uname) == "Darwin" ]; then
   /usr/local/bin/brew install watch
   /usr/local/bin/brew install watchman
   /usr/local/bin/brew install wget
-  /usr/local/bin/brew install cowsay
-  /usr/local/bin/brew install fortune
-  /usr/local/bin/brew install lolcat
 
   # Download gruvbox for iTerm2.
   if [ ! -f ~/bin/gruvbox-dark.itermcolors ]; then
@@ -164,6 +165,7 @@ if [ $(uname) == "Darwin" ]; then
 
   # Install Monaco for Powerline font.
   cp ~/.dotfiles/fonts/MonacoforPowerline.otf /Library/Fonts/
+  cp ~/.dotfiles/fonts/FuraMono-RegularPowerline.otf /Library/Fonts/
 
   # Install wuzz.
   go get github.com/asciimoo/wuzz
@@ -206,6 +208,12 @@ fi
 # Installs oh-my-zsh.
 if [! -d "$HOME/.oh-my-zsh"]; then
   sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
+
+# Install spaceship-prompt theme.
+if [ ! -d ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/spaceship-prompt ]; then
+  git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
+  ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/../themes/spaceship.zsh-theme"
 fi
 
 # Install zsh syntax highlighting.
