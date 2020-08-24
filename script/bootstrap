@@ -109,6 +109,7 @@ setup_gitconfig
 install_dotfiles
 
 # Install homebrew and OS X specific apps.
+# See https://formulae.brew.sh/cask/ for cask list.
 if [ $(uname) == "Darwin" ]; then
   if ! which brew > /dev/null; then
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -118,8 +119,10 @@ if [ $(uname) == "Darwin" ]; then
   /usr/local/bin/brew tap drud/ddev
   /usr/local/bin/brew tap netlify/netlifyctl
   /usr/local/bin/brew tap dart-lang/dart
+  /usr/local/bin/brew tap browsh-org/homebrew-browsh
   /usr/local/bin/brew install ansible
   /usr/local/bin/brew install awscli
+  /usr/local/bin/brew install browsh
   /usr/local/bin/brew install clamav
   /usr/local/bin/brew install cocoapods
   /usr/local/bin/brew install cowsay
@@ -134,7 +137,6 @@ if [ $(uname) == "Darwin" ]; then
   /usr/local/bin/brew install go
   /usr/local/bin/brew install httpie
   /usr/local/bin/brew install inetutils
-  /usr/local/bin/brew install iterm2
   /usr/local/bin/brew install jo
   /usr/local/bin/brew install jsonpp
   /usr/local/bin/brew install lolcat
@@ -157,6 +159,19 @@ if [ $(uname) == "Darwin" ]; then
   /usr/local/bin/brew install watch
   /usr/local/bin/brew install watchman
   /usr/local/bin/brew install wget
+  /usr/local/bin/brew cask install 1password
+  /usr/local/bin/brew cask install aerial
+  /usr/local/bin/brew cask install alfred
+  /usr/local/bin/brew cask install bartender
+  /usr/local/bin/brew cask install breaktimer
+  /usr/local/bin/brew cask install commandq
+  /usr/local/bin/brew cask install figma
+  /usr/local/bin/brew cask install iterm2
+  /usr/local/bin/brew cask install micro-snitch
+  /usr/local/bin/brew cask install monodraw
+  /usr/local/bin/brew cask install paw
+  /usr/local/bin/brew cask install sketchup
+  /usr/local/bin/brew cask install sublime-text
 
   # Download gruvbox for iTerm2.
   if [ ! -f ~/bin/gruvbox-dark.itermcolors ]; then
@@ -222,8 +237,9 @@ if [ ! -d ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting ]; 
 fi
 
 # Install Sack.
-if [ ! -d ~/.dotfiles/bin/sack ]; then
-  git clone https://github.com/sampson-chen/sack.git ~/.dotfiles/bin/sack && cd ~/.dotfiles/bin/sack && chmod +x install_sack.sh && ./install_sack.sh
+if [ ! -d $HOME/sack ]; then
+  git clone https://github.com/sampson-chen/sack.git $HOME/sack && cd $HOME/sack && chmod +x install_sack.sh && ./install_sack.sh
+  rm -rf $HOME/sack
 fi
 
 # Install nvm and global node.
