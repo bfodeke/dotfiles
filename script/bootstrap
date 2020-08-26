@@ -170,6 +170,7 @@ if [ $(uname) == "Darwin" ]; then
   /usr/local/bin/brew cask install micro-snitch
   /usr/local/bin/brew cask install monodraw
   /usr/local/bin/brew cask install paw
+  # This is the 2017 version [the best free one].
   /usr/local/bin/brew cask install sketchup
   /usr/local/bin/brew cask install sublime-text
 

@@ -114,8 +114,8 @@ alias subl="reattach-to-user-namespace subl"
 # DDev aliases
 alias ddrush="ddev exec drush"
 
-# RHDC drush
-alias rhdrush="./scripts/drupal-dev run drush"
+# Composer out of memory fix.
+export COMPOSER_MEMORY_LIMIT=-1
 
 # Load nvm.
 export NVM_DIR="$HOME/.nvm"
@@ -160,4 +160,9 @@ export PATH="$HOME/bin/flutter/bin:$PATH"
 export PATH="$HOME/bin/google-cloud-sdk/bin:$PATH"
 
 # MOTD-like message
-fortune -s | cowsay -f ghostbusters | lolcat -a -s 500
+fortune -s | cowsay -f ghostbusters | lolcat -a -s 2000
+
+# Allow for machine specific zshrc which is outside of dotfiles.
+if [ -f ~/.zshrc_local ]; then
+  source ~/.zshrc_local
+fi
